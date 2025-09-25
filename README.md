@@ -1,7 +1,10 @@
 # NIOZ Project
 
 <img src="NIOZ/static/img/NIOZ-LOGO.png" width="150" alt="NIOZ logo">
-
+Dit is het fieldlabs project waar ik en 2 andere klasgenoten aan mochten werken. Het doel was om de huidige webapplicatie van NIOZ (gemaakt met php) om te bouwen naar een moderne versie ervan met behulp van Django. 
+<br>
+<br>
+Originele repository: https://github.com/horizoncollege/fieldlab-project-1-programmeurs/tree/main?tab=readme-ov-file#figma-design
 
 ## Inhoudsopgave
 - [Vereisten](#vereisten)
