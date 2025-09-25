@@ -1,6 +1,6 @@
 # NIOZ Project
 
-<img src="https://github.com/horizoncollege/fieldlab-project-1-programmeurs/blob/main/NIOZ/static/img/NIOZ-LOGO.png" width="150" alt="NIOZ logo">
+<img src="NIOZ/static/img/NIOZ-LOGO.png" width="150" alt="NIOZ logo">
 
 
 (Een korte beschrijving van je Django-project hier.)
@@ -86,13 +86,3 @@ python manage.py runserver
 ```
 
 Bezoek http://127.0.0.1:8000/ in je webbrowser om het project te bekijken.<br><br><br><br><br>
-
-
-### Figma design
-Figma manage het edele ros schema/design:
-![smaller_image_for_github](https://github.com/user-attachments/assets/766726f3-d2ce-40b8-baaa-1a0422820338)
-
-link for figma disign:<br>
-https://www.figma.com/files/team/1069960495058018367/project/48156228/Team-project?fuid=1069960485795150467<br>
-#### or 
-https://www.figma.com/design/AfTXs8Dz6y6naV7ajjpBaW/website?t=AXaMPa05g1HebwUL-0
