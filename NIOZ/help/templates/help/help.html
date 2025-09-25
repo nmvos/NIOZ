@@ -1,0 +1,73 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}
+  Maintenance
+{% endblock %}
+
+{% block submenu %}
+  <!DOCTYPE html>
+  <html lang="nl">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Uitleg bij een afbeelding</title>
+      <style>
+        .container {
+          text-align: center; /* Centreer de inhoud */
+          margin: 20px; /* Zorgt voor wat ruimte rondom de container */
+        }
+        .image {
+          width: 900px; /* Verhoog de breedte van de afbeeldingen */
+          height: 350px; /* Verhoog de hoogte van de afbeeldingen */
+          object-fit: cover; /* Zorgt ervoor dat de afbeelding goed binnen de afmetingen past */
+          border: 2px solid #ccc; /* Een grijze rand rond de afbeelding */
+          margin-bottom: 10px;
+        }
+        .description {
+          font-size: 18px; /* Grootte van de tekst */
+          color: #333; /* Donkergrijze kleur van de tekst */
+          font-family: Arial, sans-serif;
+          margin-bottom: 5rem;
+        }
+
+        .main_text {
+            margin-bottom: 3rem;
+        }
+
+        hr {
+            border: 1px solid #333; /* Verhoog de dikte van de lijn naar 3px */
+            margin: 20px 0; /* Voeg ruimte toe boven en onder de lijn */
+        }
+      </style>
+    </head>
+    <body>
+        <div class="container">
+            <p class="main_text"><h3>De hier onder gegeven uitleg is voor alle pagina's in het admin systeem het zelfde.</h3></p>
+            <hr>
+            <!-- De afbeelding -->
+            <img src="{% static 'img/help-add-new-user.png' %}" alt="Django-beheer" class="image" />
+            <!-- De bijbehorende uitleg -->
+            <p class="description">Op deze 2 knoppen kan geklikt worden op een nieuwe regel aan te maken.<br> hierna kom je in een menu en zul je de regel kunnen maken.</p>
+        </div>
+      <div class="container">
+        <!-- De afbeelding -->
+        <img src="{% static 'img/help-back-password-loggout.png' %}" alt="Django-beheer" class="image" />
+        <!-- De bijbehorende uitleg -->
+        <p class="description">bij deze 3 knoppen kun je kiezen terug te gaan naar de hooft pagina,<br> een wachtwoord te wijzigen en het account af te melden.</p>
+      </div>
+      <div class="container">
+        <!-- De afbeelding -->
+        <img src="{% static 'img/help-change-rights.png' %}" alt="Django-beheer" class="image" />
+        <!-- De bijbehorende uitleg -->
+        <p class="description">als u al een gebruiker heeft aangemaakt kan u bij het wijzigen kiezen om de gebruiker andere rechten te geven.<br> Dit doe je door op het portlootje te kliken en een kleinstukje naar beneden te scrollen.</p>
+      </div>
+      <div class="container">
+        <!-- De afbeelding -->
+        <img src="{% static 'img/help-dell-user.png' %}" alt="Django-beheer" class="image" />
+        <!-- De bijbehorende uitleg -->
+        <p class="description">hier kunt u een regel verwijderen. Deze kan dan geselecteerd worden in het boxje links zoals te zien op de foto.<br> Hierna kunt u bij de actie optie selecteren om de regel te verwijderen.</p>
+      </div>
+    </body>
+  </html>
+{% endblock %}

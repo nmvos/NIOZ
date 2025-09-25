@@ -1,0 +1,30 @@
+{% extends 'home.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="content1">
+    <h1>Login</h1>
+    <form method="post" action="{% url 'login' %}" class="form-container">
+        {% csrf_token %}
+        
+        <!-- Gebruikersnaam veld -->
+        <div class="form-group">
+            <label>{{ form.username.label_tag }}</label>
+            <div class="input-icon-container">
+                {{ form.username }}
+            </div>
+        </div>
+
+        <!-- Wachtwoord veld -->
+        <div class="form-group">
+            <label>{{ form.password.label_tag }}</label>
+            <div class="input-icon-container">
+                {{ form.password }}
+            </div>
+        </div>
+
+        <button type="submit" class="submit-button">Inloggen</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,219 @@
+/* Default fyke app styling */
+.fyke-wrapper {
+  background-color: #eee;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.fyke-wrapper.biotic {
+  display: flex;
+  align-items: center;
+}
+
+.fyke-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+}
+
+.fyke-wrapper .btn {
+  margin-right: 0 !important;
+  border-radius: 0 !important;
+}
+
+.fyke-table {
+  border: 1px solid;
+  border-collapse: collapse;
+  background-color: #fdfdfd;
+}
+
+.fyke-table th {
+  background-color: #ddd;
+}
+
+.fyke {
+  display: flex;
+}
+
+.fyke-wrapper input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+
+.fyke-form table {
+  background-color: #eee;
+}
+
+.fyke-form td {
+  vertical-align: top;
+}
+
+.fyke-form td:first-child {
+  font-weight: bold;
+  text-align: right;
+}
+
+.biotic .fyke-form td:first-child {
+  text-align: left;
+  font-weight: normal;
+}
+
+.fyke-form input {
+  color: #000000;
+  font-family: verdana, helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  max-width: 100px;
+}
+
+.fyke-form span {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+/* Datacollection page */
+.year-selection-table {
+  background-color: #eee;
+  padding: 2px;
+  border: 1px solid black;
+}
+
+.year-selection-table span {
+  font-weight: bold;
+}
+
+/* datacollection/new_record page */
+
+/* fishdetails page */
+.fishdetails {
+  background-color: #eee;
+  padding: 5px;
+}
+
+.fishdetails th {
+  background-color: #ddd;
+}
+
+.fishdetails span {
+  display: block;
+  text-align: center;
+}
+
+.fishdetails a {
+  margin: 0 !important;
+  display: block;
+  text-align: center;
+}
+
+#add-stomach-data {
+  display: inline-block;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+
+  margin-left: 10px !important;
+}
+
+#add-stomach-data img {
+  width: 24px;
+}
+
+.fishdetails table {
+  border: 1px solid black;
+  padding: 0;
+  border-spacing: 0;
+}
+
+.fishdetails .fyke-wrapper-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.fishdetails .form-table td {
+  padding: 2px;
+}
+
+.fishdetails .form-table tbody td:first-child {
+  background-color: #ddd;
+  text-align: end;
+  vertical-align: top;
+  margin-top: 1px;
+}
+
+.fishdetails .form-table input[type="text"] {
+  width: 100px;
+}
+
+.fyke-wrapper #searchResults *:hover {
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.fyke-wrapper #searchResults {
+  padding: 2.5px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 20px; /* Adjust size of the "i" */
+  color: #007bff; /* Blue color for the "i" */
+}
+
+/* Tooltip text hidden by default */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px; /* Adjust width as needed */
+  background-color: #6c757d;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Position above the "i" */
+  left: 50%;
+  margin-left: -100px; /* Center the tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text on hover */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.info-icon {
+  background-color: #f3bd3c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Datacollection/biotic page */
+
+#bioticWeekTable tr td:last-child {
+  max-width: 300px;
+}
+
+.biotic #collectDisplay {
+  background-color: rgb(240, 160, 160);
+  font-weight: bold;
+  padding: 3px;
+}

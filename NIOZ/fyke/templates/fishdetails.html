@@ -1,0 +1,325 @@
+{% extends 'index.html' %} {% block content %}
+{% load static %}
+
+<div class="fyke fyke-wrapper fishdetails">
+  <span>Fish details</span>
+  <div class="fyke-wrapper-inner">
+
+    <table class="year-table fyke-table">
+      <tbody>
+        <tr>
+          <th>Year:</th>
+        </tr>
+        {% for year in years %}
+        <tr>
+          <td>
+            <!-- Generate links that filter by year -->
+            <a
+              href="?year={{ year }}"
+              class="btn {% if year == selected_year %}btn-secondary{% else %}btn-primary{% endif %}"
+            >
+              {{ year }}
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <table class="week-table fyke-table">
+      <tbody>
+        <tr>
+          <th>week:</th>
+        </tr>
+        {% if selected_year %}
+        {% for week in weeks %}
+        <tr>
+          <td>
+            <a
+              href="?year={{ selected_year }}&week={{ week }}"
+              class="btn {% if week == selected_week %}btn-secondary{% else %}btn-primary{% endif %}"
+            >
+              {{ week }}
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+
+    <table class="collectno-table fyke-table">
+      <tbody>
+        <tr>
+          <th>Collectno:</th>
+        </tr>
+        {% if selected_year and selected_week %}
+        {% for group in range_groups %}
+        {% if group.collect_in_range %}
+        <tr>
+          <td>
+            <a
+              href="?year={{ selected_year }}&week={{ selected_week }}&range={% if group.label == 'all' %}all{% else %}{{ group.start }}-{{ group.end }}{% endif %}"
+              class="btn btn-primary"
+              data-range="{% if group.label == 'all' %}all{% else %}{{ group.start }}-{{ group.end }}{% endif %}"
+            >
+              {% if group.label == 'all' %}All{% else %}{{ group.start }}-{{ group.end }}{% endif %}
+            </a>
+          </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+
+    <table class="multi-table fyke-table">
+      <tbody>
+        <tr>
+          <th>N# * Name</th>
+        </tr>
+        {% if selected_year and selected_week and selected_range %}
+        {% for fish in data %}
+        <tr>
+          <td>
+            <a
+              class="btn btn-primary"
+              style="text-align: left"
+              data-species="{{ fish.collectno }}"
+              href="?year={{ selected_year }}&week={{ selected_week }}&range={{ selected_range }}&collectno={{ fish.collectno }}"
+              >{{ fish.year }} - {{ fish.week }} - {{ fish.collectno }} * {{ fish.species.nl_name }}</a>
+          </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+      
+    <table class="form-table fyke-table">
+      <form method="post" id="fishdetails-form">
+        {% csrf_token %}
+        {% if selected_year and selected_week and range_groups and selected_collectno %}
+        {% for fish in fishdetailobject %}
+        <input type="hidden" name="fish_id" value="{{ fish.id }}">  
+        <tbody>
+          <tr>
+            <th></th>
+            <th>N#: {{ fish.year }} - {{ fish.week }} - {{ fish.collectno }}</th>
+          </tr>
+          <tr>
+            <td>Collectdate:</td>
+            <td>{{ fish.collectdate }}</td>
+          </tr>
+          <tr>
+            <td>Species:</td>
+            <td>
+              <input type="text" name="search" id="speciesSearch" placeholder="Search species..." autocomplete="off">
+
+              <div class="tooltip">
+                <span class="info-icon">i</span>
+                <span class="tooltiptext">
+                  You can search for species here using the Dutch, English, and Latin names, as well as by speciesID
+                </span>
+              </div>
+
+              <div id="searchResults" style="position: absolute; background: white; border: 1px solid #ddd; z-index: 10; display: none;"></div>
+              <input type="hidden" name="species" value="{{ biotic_data.species.species_id}}">
+              <div id="speciesDisplay">
+              {{ biotic_data.species.species_id}}-{{ biotic_data.species.nl_name}}
+            </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Condition:</td>
+            <td><select name="condition">
+              <option value="fresh" {% if fish.condition == 'fresh' %}selected{% endif %}>Fresh</option>
+              <option value="alcohol" {% if fish.condition == 'alcohol' %}selected{% endif %}>Alcohol</option>
+              <option value="formalin" {% if fish.condition == 'formalin' %}selected{% endif %}>Formalin</option>
+              <option value="frozen" {% if fish.condition == 'frozen' %}selected{% endif %}>Frozen</option>
+              <option value="unknown" {% if fish.condition == 'unknown' %}selected{% endif %}>Unknown</option>
+            </select></td>
+          </tr>
+          <tr>
+            <td>Total length:</td>
+            <td><input type="text" name="total_length" value="{{ fish.total_length }}"> cm</td>
+          </tr>
+          <tr>
+            <td>Fork length:</td>
+            <td><input type="text" name="fork_length" value="{{ fish.fork_length }}"> cm </td>
+          </tr>
+          <tr>
+            <td>Standard length:</td>
+            <td><input type="text" name="standard_length" value="{{ fish.standard_length }}"> cm</td>
+          </tr>
+          <tr>
+            <td>Fresh weight:</td>
+            <td><input type="text" name="fresh_weight" value="{{ fish.fresh_weight }}"> g </td>
+          </tr>
+          <tr>
+            <td>Liver weight:</td>
+            <td><input type="text" name="liver_weight" value="{{ fish.liver_weight }}"> g </td>
+          </tr>
+          <tr>
+            <td>Total wet mass:</td>
+            <td><input type="text" name="total_wet_mass" value="{{ fish.total_wet_mass }}"> g </td>
+          </tr>
+          <tr>
+            <td>Stomach content:</td>
+            <td>
+              <input type="text" name="stomach_content" value="{{ fish.stomach_content }}">&nbsp;g
+              
+              <a id="add-stomach-data">
+                <img src="{% static 'img\plus-icon-256x256.png' %}">
+              </a>
+
+              <div id="stomach-data-content" style=" {% if not stomach_data %}display:none;{% endif %} margin-top: 5px;">
+                <input type="hidden" name="stomach_input" value="">
+                <input type="hidden" name="stomach_number" value="">
+                <input type="hidden" name="stomach_length" value="">
+                <input type="hidden" name="stomach_delete" value="">
+                <input type="hidden" name="stomach_id" value="">
+
+                <table>
+                  <tbody id="stomach-data-tbody">
+                    <tr>
+                      <th>Input</th>
+                      <th>Name</th>
+                      <th>Number</th>
+                      <th>Length</th>
+                      <th>DEL</th>
+                    </tr>
+                    {% for stomach in stomach_data %}
+                    
+                    <tr>
+                      <td>
+                        <input type="text" id="stomach_search_{{ forloop.counter0 }}" placeholder="Search species..." autocomplete="off">
+                      </td>
+                      <td>
+                        <span id="stomach_display_{{ forloop.counter0 }}">{{ stomach.species.species_id }}-{{ stomach.species.nl_name }}</span>
+                        <input type="hidden" id="stomach_input_{{ forloop.counter0 }}" value="{{ stomach.species.species_id }}">
+                        <div id="stomach_results_{{ forloop.counter0 }}" style="position: absolute; background: white; border: 1px solid rgb(221, 221, 221); display: none;"></div>
+                      </td>
+                      <td>
+                        <input type="text" id="stomach_number_{{ forloop.counter0 }}" value="{{ stomach.number }}">
+                      </td>
+                      <td>
+                        <input type="text" id="stomach_length_{{ forloop.counter0 }}" value="{{ stomach.length }}">
+                      </td>
+                      <td>
+                        <input type="checkbox" id="stomach_delete_{{ forloop.counter0 }}" value="0" onchange="document.getElementById('stomach_delete_{{ forloop.counter0 }}').value = this.checked ? '1' : '0'">
+                        <input type="hidden" id="stomach_id_{{ forloop.counter0 }}" value="{{ stomach.id }}">
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Gonad mass:</td>
+            <td><input type="text" name="gonad_mass" value="{{ fish.gonad_mass }}"> g </td>
+          </tr>
+          <tr>
+            <td>Sexe:</td>
+            <td><select name="sexe">
+              <option value="male" {% if fish.sexe == 'male' %}selected{% endif %}>Male</option>
+              <option value="female" {% if fish.sexe == 'female' %}selected{% endif %}>Female</option>
+            </select></td>
+          </tr>
+          <tr>
+            <td>Ripeness:</td>
+            <td><input type="text" name="ripeness" value="{{ fish.ripeness }}"></td>
+          </tr>
+          <tr>
+            <td>Otolith label:</td>
+            <td><input type="text" name="otolith" value="{{ fish.otolith }}"></td>
+          </tr>
+          <tr>
+            <td>Total length (frozen):</td>
+            <td><input type="text" name="total_length_frozen" value="{{ fish.total_length_frozen }}"> cm </td>
+          </tr>
+          <tr>
+            <td>Fork length (frozen):</td>
+            <td><input type="text" name="fork_length_frozen" value="{{ fish.fork_length_frozen }}"> cm </td>
+          </tr>
+          <tr>
+            <td>Standard length (frozen):</td>
+            <td><input type="text" name="standard_length_frozen" value="{{ fish.standard_length_frozen }}"> cm </td>
+          </tr>
+          <tr>
+            <td>Frozen mass:</td>
+            <td><input type="text" name="frozen_mass" value="{{ fish.frozen_mass }}"> g </td>
+          </tr>
+          <tr>
+            <td>Height:</td>
+            <td><input type="text" name="height" value="{{ fish.height }}"></td>
+          </tr>
+          <tr>
+            <td>Age:</td>
+            <td><input type="text" name="age" value="{{ fish.age }}"></td>
+          </tr>
+          <tr>
+            <td>Rings:</td>
+            <td><input type="text" name="rings" value="{{ fish.rings }}"></td>
+          </tr>
+          <tr>
+            <td>Ogew1:</td>
+            <td><input type="text" name="ogew1" value="{{ fish.ogew1 }}"></td>
+          </tr>
+          <tr>
+            <td>Ogew2</td>
+            <td><input type="text" name="ogew2" value="{{ fish.ogew2 }}"></td>
+          </tr>
+          <tr>
+            <td>isotopes</td>
+            <td>Tissue type:<input type="text" name="tissue_type" value="{{ fish.tissue_type }}"> Vial: <input type="text" name="vial" value="{{ fish.vial }}"></td>
+          </tr>
+          <tr>
+            <td>DNA sample</td>
+            <td><input type="checkbox" name="dna_sample" id="dna_sample" {% if fish.dna_sample %}checked{% endif %}></td>
+          </tr>
+          <tr>
+            <td>Comment</td>
+            <td><textarea name="comment" cols="40" rows="3">{{ fish.comment }}</textarea></td>
+          </tr>
+          <tr>
+            <td>Micro plastic:</td>
+            <td><input type="checkbox" name="micro_plastic" id="micro_plastic" {% if fish.micro_plastic %}checked{% endif %}></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><button class="btn btn-secondary" type="submit">Save</button></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <div id="global-error-message" style="color:red; display:none;">
+                One or more inputs are invalid.
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        {% endfor %}
+        {% endif %}
+      </form>
+    </table>
+  </div>
+</div>
+
+<!-- Dynamic styling-->
+<style>
+  a[data-range="{{ selected_range }}"] {
+    background-color: var(--secondary-color);
+  }
+  a[data-species="{{ selected_collectno }}"] {
+    background-color: var(--secondary-color);
+  }
+</style>
+
+<script>
+  var stomachDataLength = {{ stomach_data|length }};
+</script>
+<script src="{% static 'js\fishdetails.js' %}"></script>
+
+{% endblock %}

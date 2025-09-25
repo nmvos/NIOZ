@@ -1,0 +1,21 @@
+{% extends 'home.html' %}
+
+{% block title %}Administrator{{ block.super }}{% endblock %}
+
+
+{% block submenu %}
+<ul>
+    <li><a href="{% url 'users_view' %}">Users</a></li>
+    <li><a href="{% url 'new_user' %}">New User</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<h1>U mag het wachtwoord van dit account niet aanpassen</h1>
+
+<script>
+    setTimeout(function() {
+        window.location.href = "{% url 'users_view' %}";
+    }, 3000);
+</script>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'home.html' %}
+
+{% block title %}Fyke{{ block.super }}{% endblock %}
+
+{% block submenu %}
+    <ul>
+      <li><a href="{% url 'datacollection' %}">Datacollection</a></li>
+      <li><a href="{% url 'fishdetails' %}">Fish details</a></li>
+      <li><a href="{% url 'catchlocations' %}">Catch Locations</a></li>
+      <li><a href="{% url 'exportdata' %}">Export data</a></li>
+    </ul>
+{% endblock %}

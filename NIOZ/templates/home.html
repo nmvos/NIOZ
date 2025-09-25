@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    
+    <!-- JS libraries -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Favicon icon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'img\NIOZ_favicon_2023.ico' %}">
+
+    <!-- Title -->
+    <title>Fyke Research - NIOZ</title>
+
+    <!-- Standard css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <!-- Page specific css-->
+    <link rel="stylesheet" href="{% static 'css/LoginSysteem.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/fykeApp.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/adminMenu.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/Maintenance.css' %}" />
+
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav>
+      <div class="navbar-header">
+        <strong>Fyke Research - NIOZ</strong>
+      </div>
+
+      {% if user.is_authenticated %}
+      <div class="navbar-menu">
+        <ul>
+          <li><a href="/admin/adminMenu/person/">Administrator</a></li>
+          <li><a href="/fyke">Fyke</a></li>
+          <li><a href="/admin/maintenance/">Maintenance</a></li>
+          <li><a href="/help">Help</a></li>
+
+          <!--De volgende code met dank aan Nils   -Marijn -->
+          <li><a href="{% url 'logout' %}" onclick="return confirm('Weet u zeker dat u wilt uitloggen?')">Uitloggen</a></li>
+        </ul>
+
+        <!-- Hier wordt een submenu dynamish geladen -->
+        {% block submenu %}{% endblock %}
+      </div>
+      {% endif %}
+    </nav>
+
+    <!-- Content -->
+    <div class="content">
+       <!-- Hier word de content dynamisch geladen-->
+      {% block content %}{% endblock %}
+    </div>
+
+    <!-- Achtergrondplaatje -->
+    <div class='background-logo'><img src="{% static 'img\NIOZ-LOGO.png' %}"></div>
+  </body>
+</html>

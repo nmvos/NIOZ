@@ -1,0 +1,516 @@
+{% extends 'home.html' %}
+
+{% block title %}Administrator{{ block.super }}{% endblock %}
+
+{% block submenu %}
+<ul>
+    <li><a href="{% url 'users_view' %}">Users</a></li>
+    <li><a href="{% url 'new_user' %}">New User</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="adminMenu">
+    <table border="0" cellspacing="0" cellpadding="0" bgcolor="#FDFDFD" class="text">
+        <tbody>
+            <tr>
+                <td align="CENTER">&nbsp;</td>
+            </tr>
+            <tr>
+                <td align="CENTER">
+                    <table border="0" cellspacing="0" cellpadding="2" class="text">
+                        <tbody>
+                            <tr>
+                                <th bgcolor="#F0F0F0">User permissions</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td align="CENTER">
+                    <table border="1" cellspacing="0" cellpadding="2" class="text"
+                        style="border:1px solid; border-collapse:collapse;" bgcolor="#FCFCFC">
+                        <tbody>
+                            <tr>
+                                <th bgcolor="#F7F7F7">User</th>
+                                <th bgcolor="#F7F7F7">Active</th>
+                                <th bgcolor="#F7F7F7">Name</th>
+                                <th>Year range access</th>
+                            </tr>
+                            <tr>
+                                <td>{{ record.user.username }}</td>
+                                <td align="CENTER"></td>
+                                <td>{{ record.user.first_name }}</td>
+                                <td align="center">from {{ record.yearFrom }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="adminMenuBarSize">
+                        <a href="{% url 'change_password' record.pk %}" class="but11">Change password</a>
+                        <a href="#" class="but11">Change name</a>
+                        <a href="#" class="but11">Change year range</a>
+                    </div>
+                    <form method="POST">
+                        {% csrf_token %}
+                    <table border="1" cellspacing="0" cellpadding="2" class="text"
+                        style="border:1px solid; border-collapse:collapse;" bgcolor="#FCFCFC">
+                        <tbody>
+                            <tr>
+                                <th bgcolor="#F7F7F7">&nbsp;<br>Function</th>
+                                <th bgcolor="#F7F7F7">No<br>access</th>
+                                <th bgcolor="#F7F7F7">Read<br>only</th>
+                                <th bgcolor="#F7F7F7">Read/<br>Write</th>
+                            </tr>
+                            <tr>
+                                <td bgcolor="#A0F0A0">Access to <b>Texel</b></td>
+                                <td>
+                                    <label>
+                                        <input {% if record.accessTexel == 1 %}checked{% endif %} type="radio" name="accessTexel" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.accessTexel == 2 %}checked{% endif %} type="radio" name="accessTexel" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.accessTexel == 3 %}checked{% endif %} type="radio" name="accessTexel" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td bgcolor="#A0F0A0">Access to <b>Lauwersoog</b></td>
+                                <td>
+                                    <label>
+                                        <input {% if record.accessLauwersoog == 1  %}checked{% endif %} type="radio" name="accessLauwersoog" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.accessLauwersoog == 2  %}checked{% endif %} type="radio" name="accessLauwersoog" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.accessLauwersoog == 3  %}checked{% endif %} type="radio" name="accessLauwersoog" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fishdata</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fishdata == 1  %}checked{% endif %} type="radio" name="fishdata" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fishdata == 2  %}checked{% endif %} type="radio" name="fishdata" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fishdata == 3  %}checked{% endif %} type="radio" name="fishdata" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fishdata - delete records</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.deleteRecords == 1  %}checked{% endif %} type="radio" name="deleteRecords" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.deleteRecords == 2  %}checked{% endif %} type="radio" name="deleteRecords" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.deleteRecords == 3  %}checked{% endif %} type="radio" name="deleteRecords" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fishdata - Export</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fishdataExport == 1  %}checked{% endif %} type="radio" name="fishdataExport" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fishdataExport == 2  %}checked{% endif %} type="radio" name="fishdataExport" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fishdataExport == 3  %}checked{% endif %} type="radio" name="fishdataExport" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fishdata - records</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fishdataRecords == 1  %}checked{% endif %} type="radio" name="fishdataRecords" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fishdataRecords == 2  %}checked{% endif %} type="radio" name="fishdataRecords" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fishdataRecords == 3  %}checked{% endif %} type="radio" name="fishdataRecords" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fishdata - Source</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fishdataSource == 1  %}checked{% endif %} type="radio" name="fishdataSource" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fishdataSource == 2  %}checked{% endif %} type="radio" name="fishdataSource" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fishdataSource == 3  %}checked{% endif %} type="radio" name="fishdataSource" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fyke</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fyke == 1  %}checked{% endif %} type="radio" name="fyke" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fyke == 2  %}checked{% endif %} type="radio" name="fyke" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fyke == 3  %}checked{% endif %} type="radio" name="fyke" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fyke - Biotic data</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeBioticdata == 1  %}checked{% endif %} type="radio" name="fykeBioticdata" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeBioticdata == 2  %}checked{% endif %} type="radio" name="fykeBioticdata" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeBioticdata == 3  %}checked{% endif %} type="radio" name="fykeBioticdata" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fyke - Data Collection </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeDatacollection == 1  %}checked{% endif %} type="radio" name="fykeDatacollection" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeDatacollection == 2  %}checked{% endif %} type="radio" name="fykeDatacollection" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeDatacollection == 3  %}checked{% endif %} type="radio" name="fykeDatacollection" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fyke - Export data</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeExportdata == 1  %}checked{% endif %} type="radio" name="fykeExportdata" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeExportdata == 2  %}checked{% endif %} type="radio" name="fykeExportdata" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeExportdata == 3  %}checked{% endif %} type="radio" name="fykeExportdata" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fyke - Fish Details</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeFishDetails == 1  %}checked{% endif %} type="radio" name="fykeFishDetails" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeFishDetails == 2  %}checked{% endif %} type="radio" name="fykeFishDetails" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeFishDetails == 3  %}checked{% endif %} type="radio" name="fykeFishDetails" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fyke - Fyke locations</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeLocations == 1  %}checked{% endif %} type="radio" name="fykeLocations" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeLocations == 2  %}checked{% endif %} type="radio" name="fykeLocations" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.fykeLocations == 3  %}checked{% endif %} type="radio" name="fykeLocations" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Maintenance</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.maintenance == 1  %}checked{% endif %} type="radio" name="maintenance" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.maintenance == 2  %}checked{% endif %} type="radio" name="maintenance" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.maintenance == 3  %}checked{% endif %} type="radio" name="maintenance" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Maintenance - Fishprogrammes</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.maintenanceFishprogrammes == 1  %}checked{% endif %} type="radio" name="maintenanceFishprogrammes" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.maintenanceFishprogrammes == 2  %}checked{% endif %} type="radio" name="maintenanceFishprogrammes" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.maintenanceFishprogrammes == 3  %}checked{% endif %} type="radio" name="maintenanceFishprogrammes" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Maintenance - Locations</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.maintenanceLocations == 1  %}checked{% endif %} type="radio" name="maintenanceLocations" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.maintenanceLocations == 2  %}checked{% endif %} type="radio" name="maintenanceLocations" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.maintenanceLocations == 3  %}checked{% endif %} type="radio" name="maintenanceLocations" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Maintenance - Species</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.maintenanceSpecies == 1  %}checked{% endif %} type="radio" name="maintenanceSpecies" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.maintenanceSpecies == 2  %}checked{% endif %} type="radio" name="maintenanceSpecies" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.maintenanceSpecies == 3  %}checked{% endif %} type="radio" name="maintenanceSpecies" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Manager</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.manager == 1  %}checked{% endif %} type="radio" name="manager" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.manager == 2  %}checked{% endif %} type="radio" name="manager" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.manager == 3  %}checked{% endif %} type="radio" name="manager" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Manager - User access</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.managerUserAccess == 1  %}checked{% endif %} type="radio" name="managerUserAccess" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.managerUserAccess == 2  %}checked{% endif %} type="radio" name="managerUserAccess" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.managerUserAccess == 3  %}checked{% endif %} type="radio" name="managerUserAccess" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Options</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.options == 1  %}checked{% endif %} type="radio" name="options" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.options == 2  %}checked{% endif %} type="radio" name="options" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.options == 3  %}checked{% endif %} type="radio" name="options" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Options - User settings</td>
+                                <td>
+                                    <label>
+                                        <input {% if record.optionsUserSettings == 1  %}checked{% endif %} type="radio" name="optionsUserSettings" value="1">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.optionsUserSettings == 2  %}checked{% endif %} type="radio" name="optionsUserSettings" value="2">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input {% if record.optionsUserSettings == 3  %}checked{% endif %} type="radio" name="optionsUserSettings" value="3">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit">Save</button>
+</form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

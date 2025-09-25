@@ -1,0 +1,191 @@
+{% extends 'index.html' %} {% block content %}
+<form method="POST" id="edit-record-form" class="fyke-form">
+  {% csrf_token %}
+  <span>Datacollection record (edit)</span>
+  <table>
+    <tbody>
+      <tr>
+        <td>Date:</td>
+        <td>
+          <input type="text" name="date" value="{{ form.date.value|date:"d-m-Y" }}" readonly>
+        </td>
+      </tr>
+      <tr>
+        <td>Time:</td>
+        <td>
+          <input type="text" name="time" value="{{ form.time.value }}" readonly>
+        </td>
+      </tr>
+      <tr>
+        <td>Observer:</td>
+        <td>{{ form.observer }}</td>
+      </tr>
+      <tr>
+        <td>Fyke:</td>
+        <td>{{ form.fyke }}</td>
+      </tr>
+      <tr>
+        <td>Fishing duration:</td>
+        <td><input type="number" name="duration" id="id_duration" value="{{ form.duration.value }}"></td>
+      </tr>
+      <tr>
+        <td>Tidal phase:</td>
+        <td>{{ form.tidal_phase }}</td>
+      </tr>
+      <tr>
+        <td>Salinity (µS/cm):</td>
+        <td>{{ form.salinity }}</td>
+      </tr>
+      <tr>
+        <td>Temperature (˚C):</td>
+        <td>{{ form.temperature }}</td>
+      </tr>
+      <tr>
+        <td>Wind direction:</td>
+        <td>{{ form.wind_direction }}</td>
+      </tr>
+      <tr>
+        <td>Wind speed (Bft):</td>
+        <td>{{ form.wind_speed }}</td>
+      </tr>
+      <tr>
+        <td>Secchi depth (cm):</td>
+        <td>{{ form.secchi_depth }}</td>
+      </tr>
+      <tr>
+        <td>FU-scale:</td>
+        <td>{{ form.fu_scale }}</td>
+      </tr>
+      <tr>
+        <td>Remarks:</td>
+        <td>
+          <textarea name="remarks" id="id_remarks" rows="4" cols="50">{{ form.remarks.value }}</textarea>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <div id="global-error-message" style="color:red; display:none;">
+            One or more inputs are invalid.
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <input type="hidden" name="date" value="{{ form.date.value|date:"Y-m-d" }}">
+  <input type="hidden" name="fishingday" value="{{ form.fishingday.value }}">
+
+  <div style="margin-top: 5px">
+    <button class="btn btn-secondary" type="submit">Store</button>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'datacollection' %}'">Cancel</button>
+  </div>
+</form>
+
+<script>
+  document.getElementById('form').addEventListener('submit', function(event) {
+    // Get all input fields for validation
+    var fields = document.querySelectorAll('input[type="text"]');
+    var isValid = true; // Assume inputs are valid initially
+
+    // Regular expression to allow both decimal separators (either . or ,)
+    var numberRegex = /^[0-9]+([.,][0-9]+)?$/;
+
+    // Hide the global error message initially
+    var globalErrorMessage = document.getElementById('global-error-message');
+    globalErrorMessage.style.display = 'none';
+
+    // Loop through all fields and validate
+    fields.forEach(function(field) {
+        var value = field.value.trim();
+
+        if (field.name === 'date' || field.name === 'time' || field.name === 'observer' || field.name === 'wind_direction') {
+            return;
+        }
+
+        // Check if the field is valid
+        if (value !== "" && !numberRegex.test(value)) {
+            // Invalid input: apply styles
+            field.style.border = '1px red solid';
+            field.style.backgroundColor = 'pink';
+            isValid = false;
+        } else {
+            // Valid input: reset styles
+            field.style.border = '';
+            field.style.backgroundColor = '';
+        }
+    });
+
+    // If any field is invalid, show the global error message
+    if (!isValid) {
+        event.preventDefault(); // Prevent form submission
+        globalErrorMessage.style.display = 'block'; // Show the global error message
+    }
+  });
+</script>
+
+<script>
+    var fishingDurationInput = document.getElementById('id_duration');
+    var lastFishingDuration = fishingDurationInput.value; // initial value
+    var remarksInput = document.getElementById('id_remarks');
+    var remarksValue = remarksInput.value;
+    var spacing = '';
+
+    if (remarksValue !== '') {
+      spacing = '\r\n\r\n'
+    }
+
+    fishingDurationInput.addEventListener('input', function () {
+      var newFishingDuration = fishingDurationInput.value;
+      if (newFishingDuration != lastFishingDuration) {
+        var userName = "{{ user.username }}";  // Get the logged-in username
+        remarksInput.value = remarksValue + spacing + "User '" + userName + "' changed fishing duration from '" + lastFishingDuration + "' to '" + newFishingDuration + "'";
+      } else {
+        remarksInput.value = "";  // Clear remarks if no change
+      }
+    });
+</script>
+
+<script>
+  document.getElementById('edit-record-form').addEventListener('submit', function(event) {
+    // Get all input fields for validation
+    var fields = document.querySelectorAll('input[type="text"]');
+    var isValid = true; // Assume inputs are valid initially
+
+    // Regular expression to allow both decimal separators (either . or ,)
+    var numberRegex = /^[0-9]+([.,][0-9]+)?$/;
+
+    // Hide the global error message initially
+    var globalErrorMessage = document.getElementById('global-error-message');
+    globalErrorMessage.style.display = 'none';
+
+    // Loop through all fields and validate
+    fields.forEach(function(field) {
+        var value = field.value.trim();
+
+        // Skip validation for these fields
+        if (field.name === 'date' || field.name === 'observer' || field.name === 'time' || value.toUpperCase() === 'NA') {
+            return; // Skip validation for these fields
+        }
+
+        // Check if the field is valid
+        if (value !== "" && !numberRegex.test(value)) {
+            // Invalid input: apply styles
+            field.style.border = '1px red solid';
+            field.style.backgroundColor = 'pink';
+            isValid = false;
+        } else {
+            // Valid input: reset styles
+            field.style.border = '';
+            field.style.backgroundColor = '';
+        }
+    });
+
+    // If any field is invalid, show the global error message
+    if (!isValid) {
+        event.preventDefault(); // Prevent form submission
+        globalErrorMessage.style.display = 'block'; // Show the global error message
+    }
+  });
+</script>
+{% endblock %}

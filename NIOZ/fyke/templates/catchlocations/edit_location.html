@@ -1,0 +1,53 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <form method="POST" class="fyke-form">
+    {% csrf_token %}
+    <span>Fykes (edit)</span>
+    <table>
+      <tbody>
+        <tr>
+          <td>Fyke name:</td>
+          <td>{{ form.name }}</td>
+        </tr>
+        <tr>
+          <td>Type:</td>
+          <td>{{ form.type }}</td>
+        </tr>
+        <tr>
+          <td>Latitude:</td>
+          <td>{{ form.latitude }}</td>
+        </tr>
+        <tr>
+          <td>Longitude:</td>
+          <td>{{ form.longitude }}</td>
+        </tr>
+        <tr>
+          <td>Remarks:</td>
+          <td>
+            <textarea name="remarks" id="id_remarks" rows="4" cols="50">{{ form.remarks.value }}</textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Collect group:</td>
+          <td>{{ form.collect_group }}</td>
+        </tr>
+        <tr>
+          <td>Location labelprint:</td>
+          <td>{{ form.print_label }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <div id="global-error-message" style="color:red; display:none;">One or more inputs are invalid.</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 5px">
+      <button class="btn btn-secondary" type="submit">Submit</button>
+      <a href="{% url 'catchlocations' %}" class="btn btn-primary">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,131 @@
+:root {
+  --main-color: #f3bd3c;
+  --main-color-hover: #c0952f;
+  --secondary-color: #0f0;
+  --secondary-color-hover: #0b0;
+  --main-font: Verdana;
+}
+
+/* ===== Default styling ===== */
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  height: 100%;
+}
+
+.background-img {
+  max-width: 1000px;
+}
+
+.background-logo {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+}
+
+@media only screen and (max-width: 1919px) {
+  .background-logo {
+    display: none;
+  }
+}
+
+.background-logo img {
+  max-height: 50vh;
+  z-index: 0;
+}
+
+.btn {
+  padding: 2px 8px;
+  margin-right: 8px;
+  color: black;
+  text-decoration: none;
+  transition: background-color 0.25s ease;
+  white-space: nowrap;
+}
+.btn:hover {
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--main-color);
+}
+.btn-primary:hover {
+  background-color: var(--main-color-hover);
+}
+.btn-secondary {
+  background-color: var(--secondary-color);
+}
+.btn-secondary:hover {
+  background-color: var(--secondary-color-hover);
+}
+button,
+.btn {
+  padding-block: 2px;
+  padding-inline: 8px;
+  border-width: unset;
+  border-style: unset;
+  border-color: unset;
+  border-image: initial;
+  font-family: Verdana;
+  font-size: 16px;
+}
+
+/* ===== Navbar Start ===== */
+.navbar-header {
+  padding: 5px;
+
+  border: 1px solid;
+  background-color: #eee;
+
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-menu ul {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-menu li {
+  display: inline;
+}
+
+.navbar-menu li a,
+.adminMenu a {
+  border-radius: 2px;
+  background-color: #f3bd3c;
+  padding: 2px 8px;
+  margin-right: 8px;
+  color: black;
+  text-decoration: none;
+  transition: background-color 0.25s ease;
+  white-space: nowrap;
+}
+
+.navbar-menu li a:hover {
+  background-color: var(--main-color-hover);
+}
+
+/* ===== Navbar End ===== */
+
+.menu-button {
+  background-color: #f3bd3c;
+  color: white;
+  padding: 1px 5px;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.menu-button:hover {
+  background-color: #303030;
+}
+
+.bars {
+  border: darkgray;
+}

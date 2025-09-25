@@ -1,0 +1,45 @@
+{% extends 'index.html' %} {% block content %}
+<div class="fyke-wrapper">
+  <span class="newrecord"
+    ><a href="{% url 'new_location' %}" class="btn btn-primary"
+      >New Record</a
+    ></span
+  >
+  <div class="fyke-inner">
+    <table border="1" cellpadding="4" class="fyke-table">
+      <thead>
+        <tr>
+          <th>Options</th>
+          <th>Fyke#</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Remarks</th>
+          <th>Collectgroup</th>
+          <th>Printlabel</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for location in data %}
+        <tr>
+          <td><a class="btn btn-primary" href="{% url 'edit_location' location.pk %}">edit</a></td>
+          <td>{{ location.id }}</td>
+          <td>{{ location.name }}</td>
+          <td>{{ location.type }}</td>
+          <td>{{ location.latitude }}</td>
+          <td>{{ location.longitude }}</td>
+          <td>{{ location.remarks }}</td>
+          <td>{{ location.collect_group }}</td>
+          <td>{{ location.print_label }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3">No locations found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

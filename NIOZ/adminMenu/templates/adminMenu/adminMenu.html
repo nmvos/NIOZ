@@ -1,0 +1,87 @@
+{% extends 'home.html' %}
+
+{% block title %}Administrator{{ block.super }}{% endblock %}
+
+{% block submenu %}
+<ul>
+    <li><a href="{% url 'users_view' %}">Users</a></li>
+    <li><a href="{% url 'new_user' %}">New User</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<table class="spacing" class="text">
+    <tr>
+        <td align="CENTER" bgcolor="#F0F0F0">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Users</th>
+                    </tr>
+                </tbody>
+            </table>
+            <form id="active-form">
+                {% csrf_token %}
+                <table border="1" cellpadding="2" class="text" style="border:1px solid; border-collapse:collapse;" bgcolor="#fcfcfc">
+                    <tbody>
+                        <tr class="bars" bgcolor="#e0e0e0">
+                            <th>Username</th>
+                            <th>Active</th>
+                            <th>Real Name</th>
+                            <th>Access to Collect Location</th>
+                            <th>Access from Year</th>
+                            <th>Access until Year</th>
+                        </tr>
+                        {% for person in persons %}
+                        <tr class="bars">
+                            <td><a class="user" href="{% url 'userinfo_view' person.pk %}">{{ person.user.username }}</a></td>
+                            <td>
+                                <input type="checkbox" onchange="saveActiveState(this)" value="{{ person.id }}" {% if person.user.is_active %}checked{% endif %}>
+                            </td>
+                            <td>{{ person.user.first_name }}</td>
+                            <td>{{ person.collectlocation }}</td>
+                            <td>{{ person.yearFrom }}</td>
+                            <td>{% if person.yearUntil == '9999' %} &infin; {% else %} {{ person.yearUntil }}{% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<script>
+    function saveActiveState(checkbox) {
+        const personId = checkbox.value;
+        const isChecked = checkbox.checked;
+    
+        const formData = new FormData();
+        formData.append('person_id', personId);
+        formData.append('active', isChecked ? 'true' : 'false');  // Send true or false as string
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+    
+        // Send the AJAX request
+        fetch(window.location.href, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                console.log('Active state saved successfully!');
+            } else {
+                console.error('Error:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'index.html' %} {% block content %}
+<div class="fyke-wrapper">
+  <span class="newrecord"
+    ><a href="{% url 'new_record' %}" class="btn btn-primary"
+      >New Record</a
+    ></span
+  >
+  <div class="fyke-inner">
+    <table class="year-selection-table fyke-table">
+      <tbody>
+        <tr>
+          <th>Year:</th>
+        </tr>
+        {% for year in years %}
+        <tr>
+          <td>
+            <!-- Generate links that filter by year -->
+            <a
+              href="?year={{ year }}"
+              class="btn {% if year == selected_year %}btn-secondary{% else %}btn-primary{% endif %}"
+            >
+              {{ year }}
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div>
+      <table border="1" cellpadding="4" id="data-table" class="fyke-table">
+        <tbody>
+          <tr>
+            <th>options</th>
+            <th>date</th>
+            <th>time</th>
+            <th>year</th>
+            <th>week</th>
+            <th>fishingday</th>
+            <th>fyke</th>
+            <th>duration</th>
+            <th>remarks</th>
+            <th>observer</th>
+          </tr>
+          <tr>
+            {% for item in data %}
+            <td>
+              <a class="btn btn-primary" href="#">print</a>
+              <a class="btn btn-primary" href="{% url 'edit_record' item.pk %}"
+                >edit</a
+              >
+              <a class="btn btn-primary" href="{% url 'biotic' item.pk %}">biotic</a>
+            </td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.time }}</td>
+            <td>{{ item.year }}</td>
+            <td>{{ item.week }}</td>
+            <td>{{ item.fishingday }}</td>
+            <td>{{ item.fyke }}</td>
+            <td>{{ item.duration|default:'' }}</td>
+            <td>{{ item.remarks }}</td>
+            <td>{{ item.observer }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="12">No data available.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Get all the <td> elements
+      const cells = document.querySelectorAll('#data-table td');
+      
+      cells.forEach(function(cell) {
+          // Check if the cell's text content is 'NA'
+          if (cell.textContent.trim() === 'NA') {
+              // Apply the background color to the cell
+              cell.style.backgroundColor = 'yellow';
+          }
+      });
+  });
+</script>
+
+{% endblock %}

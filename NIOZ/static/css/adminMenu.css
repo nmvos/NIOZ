@@ -1,0 +1,90 @@
+.test {
+    background-color: red;
+}
+
+.menu-button {
+    background-color: #F3BD3C;
+    color: black;
+    padding: 1px 5px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.menu-button:hover {
+    background-color: #303030;
+    color: white;
+}
+
+.bars {
+    border: darkgray;
+}
+
+.user {
+    background-color: #F3BD3C;
+    color: black;
+    padding: 1px 5px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.user:hover {
+    background-color: #303030;
+    color: white;
+}
+
+.spacing {
+    margin-top: 2rem;
+    background-color: #FDFDFD;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+.custom-radio {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #000;
+    border-radius: 2px;
+    background-color: white;
+    position: relative;
+    cursor: pointer;
+}
+
+input[type="radio"]:checked + .custom-radio::before {
+    content: "\2713";
+    position: absolute;
+    color: black;
+    font-size: 12px;
+    top: -2px;
+    left: 1px;
+}
+
+label {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.adminMenuBar {
+    margin-right: 3px;
+}
+
+.adminMenuBarSize {
+    margin: 8px;
+}
+
+.adminMenu .change_password_button {
+margin-bottom: 1rem;
+width: 75%;
+height: 30px;
+}
