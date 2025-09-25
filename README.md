@@ -8,7 +8,6 @@
 - [Installatie](#installatie)
 - [Configuratie](#configuratie)
 - [Project starten](#project-starten)
-- [Figma design](#figma-design)
 ---
 
 ### Vereisten
