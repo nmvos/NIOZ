@@ -3,8 +3,6 @@
 <img src="NIOZ/static/img/NIOZ-LOGO.png" width="150" alt="NIOZ logo">
 
 
-(Een korte beschrijving van je Django-project hier.)
-
 ## Inhoudsopgave
 - [Vereisten](#vereisten)
 - [Installatie](#installatie)
